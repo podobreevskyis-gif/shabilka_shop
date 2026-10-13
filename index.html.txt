@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SHABILKA SHOP</title>
+        <style>
+                    body {
+                        margin: 0;
+                        padding: 30px;
+                        background: #111827;
+                        color: white;
+                        font-family: Arial, sans-serif;
+                    }
+                    h1 { color: #a78bfa; }
+                    #products {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 20px;
+                    }
+                    .product {
+                        background: #1f2937;
+                        padding: 20px;
+                        border-radius: 12px;
+                        width: 220px;
+            }
+                    button {
+                        background: #8b5cf6;
+                        color: white;
+                        border: none;
+                        padding: 10px 16px;
+                        border-radius: 8px;
+                        cursor: pointer;
+                    }
+                </style>
+    </head>
+<body>
+    <h1>SHABILKA SHOP</h1>
+    <p>Добро пожаловать в наш магазин!</p>
+    <div id="products">Загрузка товаров...</div>
+    <script>
+                async function loadProducts() {
+                    const response = await fetch("/api/products");
+                    const products = await response.json();
+                    document.getElementById("products").innerHTML =
+                        products.map(product => `
+                            <div class="product">
+                                <h2>${product.name}</h2>
+                                <p>${product.description}</p>
+                                <h3>${product.price} ₽</h3>
+                                <button onclick="alert('Товар: ${product.name}')">
+                                    Подробнее
+                                </button>
+                            </div>
+                        `).join("");
+                }
+                loadProducts();
+            </script>
+</body>
+</html>
